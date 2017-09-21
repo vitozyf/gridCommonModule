@@ -1,0 +1,198 @@
+//
+// Utility classes
+// --------------------------------------------------
+
+// Horizontal rules
+
+hr {
+  margin-top:    $line-height-computed;
+  margin-bottom: $line-height-computed;
+  border: 0;
+  border-top: 1px solid $hr-border;
+}
+
+// Floats
+// -------------------------
+
+.clearfix {
+  @include clearfix;
+}
+.center-block {
+  @include center-block;
+}
+.pull-right {
+  float: right !important;
+}
+.pull-left {
+  float: left !important;
+}
+
+
+// Toggling content
+// -------------------------
+
+.hide {
+  display: none !important;
+}
+.show {
+  display: block !important;
+}
+.invisible {
+  visibility: hidden;
+}
+.text-hide {
+  @include text-hide;
+}
+.text-blod {
+  font-weight: 600;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
+.text-justify {
+  text-align: justify;
+}
+.text-nowrap {
+  white-space: nowrap;
+}
+
+.text-lowercase {
+  text-transform: lowercase;
+}
+.text-uppercase {
+  text-transform: uppercase;
+}
+.text-capitalize {
+  text-transform: capitalize;
+}
+.text-muted {
+  color: $gray;
+}
+.text-primary {
+  color: $brand-primary;
+}
+a.text-primary:hover,
+a.text-primary:focus {
+  color:darken($brand-primary,10%);
+}
+.text-success {
+  color:$brand-success;
+}
+a.text-success:hover,
+a.text-success:focus {
+  color:darken($brand-success,10%);
+}
+.text-info {
+  color: $brand-info;
+}
+a.text-info:hover,
+a.text-info:focus {
+  color: darken($brand-info,10%);
+}
+.text-warning {
+  color: $brand-warning;
+}
+a.text-warning:hover,
+a.text-warning:focus {
+  color: darken($brand-warning,10%);
+}
+.text-danger {
+  color: $brand-danger;
+}
+a.text-danger:hover,
+a.text-danger:focus {
+  color: darken($brand-danger,10%);
+}
+.bg-primary {
+  color: $white;
+  background-color:$brand-primary;
+}
+a.bg-primary:hover,
+a.bg-primary:focus {
+  background-color:lighten($brand-primary,10%);
+}
+.bg-success {
+  background-color: lighten($brand-success,50%);
+}
+a.bg-success:hover,
+a.bg-success:focus {
+  background-color:lighten($brand-success,40%);
+}
+.bg-info {
+  background-color:lighten($brand-info,40%);
+}
+a.bg-info:hover,
+a.bg-info:focus {
+  background-color:lighten($brand-info,30%);
+}
+.bg-warning {
+  background-color:lighten($brand-warning,40%);
+}
+a.bg-warning:hover,
+a.bg-warning:focus {
+  background-color:lighten($brand-warning,30%);
+}
+.bg-danger {
+  background-color:lighten($brand-danger,30%);
+}
+a.bg-danger:hover,
+a.bg-danger:focus {
+  background-color: lighten($brand-danger,20%);
+}
+
+
+// Only display content to screen readers
+//
+// See: http://a11yproject.com/posts/how-to-hide-content
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+// Use in conjunction with .sr-only to only display content when it's focused.
+// Useful for "Skip to main content" links; see http://www.w3.org/TR/2013/NOTE-WCAG20-TECHS-20130905/G1
+// Credit: HTML5 Boilerplate
+
+.sr-only-focusable {
+  &:active,
+  &:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+  }
+}
+
+
+// iOS "clickable elements" fix for role="button"
+//
+// Fixes "clickability" issue (and more generally, the firing of events such as focus as well)
+// for traditionally non-focusable elements with role="button"
+// see https://developer.mozilla.org/en-US/docs/Web/Events/click#Safari_Mobile
+
+[role="button"] {
+  cursor: pointer;
+}
+
+
+// For Affix plugin
+// -------------------------
+
+.affix {
+  position: fixed;
+}

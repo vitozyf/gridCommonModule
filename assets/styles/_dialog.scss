@@ -1,0 +1,60 @@
+.el-dialog{
+  padding-bottom: 10px;
+}
+.el-dialog__header {
+  padding: 15px 16.7px 0 20px;
+  height: 24px;
+  color: #4D4D4D;
+  .el-dialog__title {
+    font-size: 18px;
+  }
+}
+.el-dialog__body {
+  padding: 0 10px !important;
+  .base-flex-grid {
+    border: 1px solid #DFE2E5 !important;
+    // border-top: 0 !important;
+    // margin-top: 20px;
+  }
+}
+.dialog-footer {
+  padding: 30px 0 10px 0 !important;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 !important;
+  .el-button--primary-rev:hover{
+    background-color: #F5F5F5;
+  }
+  .el-button--mini {
+    height: 30px !important;
+    width: 80px;
+    color: #999;
+    border-color: #DFE2E5;
+    margin-left: 20px;
+    &:first-of-type {
+      margin-right: 18px;
+    }
+    &:last-of-type {
+      color: #fff;
+    }
+    &:only-of-type {
+      margin-right: 15px;
+    }
+  }
+}
+
+.el-dialog .el-row:last-of-type {
+  margin-bottom: 0 !important;
+  // margin-top: 10px!important;
+}
+
+._dialog_height_20 {
+  height: 10px;
+}
+
+.el-dialog--small{
+  min-width: 650px;
+}
+.el-dialog--tiny{
+  min-width: 650px;
+}
