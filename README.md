@@ -21,6 +21,45 @@
 
 ## 其他组件
 
+### 编辑框组件znlEditGridDlg
+- Attributes
+  - type 类型
+  - showAddRowButton 显示‘新增一行’按钮  （type为action或edit）
+  - isMultiRowsCheck && showDeleteRowButton  显示‘删除选中行’按钮 （type为action或edit）
+  - isMultiRowsCheck && showDeleteRowButton  显示‘删除选择行’按钮 （type为action或edit）
+  - showStocklistCheck    显示‘选择库存’按钮 （type为action或edit）
+  - IsExcelCheck    显示‘从Excel粘贴’按钮 （type为action或edit）
+  - onPageSave  保存方法
+  - pageSubmit  提交方法
+  - pageCancel  撤单方法
+  - pageAudit   审核方法
+
+- 调用举例
+
+  ```javascript
+    <znl-dialog title='测试znl-edit-grid-dlg标题'
+                 :visible='showStkstocklog'
+                 @update:visible="(val)=>{showStkstocklog=val}"
+                 size='small'>
+        <znl-edit-grid-dlg ref="StkStockLog"
+                     :item-source="itemSource"
+                      :maxHeightData="500"
+                      height="300px"
+                      :columns="columns"
+                      type="edit"
+                      :isBtn="true"
+                      :showStocklistCheck='true'
+                      :on-search="onSearch"
+                      :isFieldsSearch="true"
+                      :total-count="totalCount"
+                      :page-index="pageIndex"
+                      :page-size="pageSize"
+                      :on-save-rows="onSaveRows"
+                      :on-page-changed="onPageChanged"
+                      :checkbox-binding-key="checkboxBindingKey"
+                      ></znl-edit-grid-dlg>
+      </znl-dialog>
+  ```
 
 ### 选择框组件znlSelectDlg
 - Attributes

@@ -162,6 +162,7 @@
                 <span>
                   <span>
                      <!-- <icon :name="menu.iconName"></icon> -->
+                     <!-- <i class="iconfont icon-"+{{menu.iconName}}+"_ic"></i> -->
                      {{menu.text}}
                   </span>
                 </span>
@@ -169,7 +170,9 @@
               <li v-else>
                 <a href="#"
                   @click.stop.prevent="(e)=>{contextMenuClick(e,menu.click)}">
-                  <icon :name="menu.iconName"></icon>{{menu.text}}</a>
+                  <!-- <icon :name="menu.iconName"></icon> -->
+                  <!-- <i class="iconfont icon-"+{{menu.iconName}}+"_ic"></i> -->
+                  {{menu.text}}</a>
               </li>
             </template>
           </ul>
@@ -844,7 +847,7 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss" >
   .el-table .el-table__header-wrapper .cell, .el-table th>div{
     padding-left: 0;
     padding-right: 0;
@@ -884,7 +887,9 @@ export default {
   /* body cell框 */
   .el-table .el-table__row .cell{
     line-height: 30px;
+    font-size: 12px;
     position: relative;
+    height: 30px;
   }
   /* 操作按钮 */
   .el-table .el-table__row .cell .elementGridBtn,.IsAdoptStkTxtBtn{
@@ -963,6 +968,12 @@ export default {
     position: absolute;
     top: 7px;
     right: 50px;
+  }
+  .btnSaveAndCancel .el-button{
+    height: 30px;
+  }
+  .btnSaveAndCancel .saveandout:hover{
+      background-color: #E6E6E6!important;
   }
   /* 表头 */
   .el-table__footer-wrapper thead div, .el-table__header-wrapper thead div{

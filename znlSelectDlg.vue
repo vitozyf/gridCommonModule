@@ -252,6 +252,10 @@ export default {
 }
 </script>
 
-<style lang="scss" >
+<style lang="scss">
+.showStocklist  .dialog-footer .el-button--primary{
+  background-color: #ee7700;
+  border: none;
+}
 </style>
 

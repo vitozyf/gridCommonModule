@@ -187,7 +187,7 @@ export default {
     search () {
       return this.$refs.baseFlexGrid.search()
     },
-    ondblclick (row, column, cell, event) {
+    ondblclick (row, column, cell, event) { // 双击编辑
       this.optionsSelected.row = row
       this.optionsSelected.column = column
       this.optionsSelected.cell = cell
@@ -210,8 +210,6 @@ export default {
         cell.querySelector('.cell').setAttribute('columnName', column.columnKey)
         cell.querySelector('.cell').setAttribute('oldValue', this.transformSubmitValue([row[column.columnKey]])[0] || '')
       }
-
-      // console.log('双击', row)
       // 列序号
       let cols = this.$refs.baseFlexGrid.checkColumns
       let colIndex = 0
@@ -289,7 +287,9 @@ export default {
       }else if (!column.isReadOnly && !cell.querySelector('div input')) {
         // 增加input
         let container = cell.querySelector('div div')
+        console.log(container)
         let inp = document.createElement('input')
+        inp.style.height='30px'
         inp.setAttribute('type', 'text')
         inp.style.backgroundColor = '#fff'
         let autofocusInps = this.$el.querySelectorAll('.focusInput')
@@ -345,10 +345,7 @@ export default {
           // 失去焦点时将值显示
           inp.parentElement.querySelector('div').innerText = inp.value || ''
           // 替换input
-          // let newNode = document.createElement('div')
-          // newNode.innerText = inp.value
           e.target.parentElement.removeChild(inp)
-          // console.log(e)
         }
         // container.removeChild(container.children[0])
         container.appendChild(inp)
@@ -562,6 +559,9 @@ export default {
   padding: 0 5px;
   outline:medium;
   border:none;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 .dblClickInputFocus{
   border: 1px solid #ED9E00;

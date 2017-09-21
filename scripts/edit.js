@@ -38,7 +38,7 @@ const ADD_NEWROW = function (defaultVal = {}) {
   let items = _.isArray(this.itemSource) ? this.itemSource : this.itemSource.items
   // console.log(items)
   items.push(_.clone(defaultVal))
-  this.gridItemSource.sourceCollection = items
+  // this.gridItemSource.sourceCollection = items
 
   // this.$nextTick(() => {
   //   let editingCell = _.find(this.grid.columnHeaders.columns, item => {
@@ -66,7 +66,7 @@ const SAVE_ROW = function (rowData, rowIndex) {
     this.cacheItemSource.splice(orginalSavingIndex, 1, _.clone(rowData))
   }
   REMOVE_FROM_EDITING.call(this, this.editedRows, oldData[0])
-  this.gridItemSource.sourceCollection = items
+  // this.gridItemSource.sourceCollection = items
 }
 // 移出行
 const REMOVE_ROW = function (deleteItem) {
@@ -78,7 +78,7 @@ const REMOVE_ROW = function (deleteItem) {
   // for (let i = 0; i < len; i++) {
   // this.editingSelection && this.editingSelection.row === deletingIndex && (this.editingSelection = null)
   items.splice(deletingIndex, 1)
-  this.gridItemSource.sourceCollection = items
+  // this.gridItemSource.sourceCollection = items
   // }
 }
 // 取消编辑
@@ -90,7 +90,7 @@ const CANCEL_EDIT = function (rowData, rowIndex) {
     let originalData = _.find(this.cacheItemSource, cache => cache[PK_COLUMN] === rowData[PK_COLUMN])
     originalData && items.splice(rowIndex, 1, _.clone(originalData))
   }
-  this.gridItemSource.sourceCollection = items
+  // this.gridItemSource.sourceCollection = items
 }
 
 // 从改变数据行中删除
@@ -186,9 +186,8 @@ const METHODS = {
     })
   },
   deleteRows () {
-    // console.log(this)
     let rowsData = this.$refs.actionFlexGrid.getSelectedRows()
-    if (rowsData.length) {
+    if (!_.isUndefined(rowsData[0])) {
       this.$confirm('删除确认, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -197,24 +196,7 @@ const METHODS = {
         _.each(rowsData, rowData => {
           REMOVE_ROW.call(this, rowData)
         })
-        this.$refs.actionFlexGrid.$refs.baseFlexGrid.$refs.baseElementGrid.clearSelection()
-        // let deleteCheckedRow = this.onDeleteCheckedRow && this.onDeleteCheckedRow(_.map(rowsData, rowData => _.clone(rowData)))
-        // let deleteCheckedRow = true
-        // if (_.isBoolean(deleteCheckedRow) && deleteCheckedRow) {
-        //   _.each(rowsData, rowData => {
-        //     REMOVE_ROW.call(this, rowData)
-        //   })
-        //   this.onDeletedCheckedRow && this.onDeletedCheckedRow(_.map(rowsData, rowData => _.clone(rowData)))
-        // } else if (!_.isUndefined(deleteCheckedRow) && deleteCheckedRow.then) {
-        //   deleteCheckedRow.then(d => {
-        //     if (_.isBoolean(d) && d) {
-        //       _.each(rowsData, rowData => {
-        //         REMOVE_ROW.call(this, rowData)
-        //       })
-        //       this.onDeletedCheckedRow && this.onDeletedCheckedRow(_.map(rowsData, rowData => _.clone(rowData)))
-        //     }
-        //   })
-        // }
+        this.clearSelection()
         this.editingSelection = null
       })
     } else {
@@ -223,8 +205,8 @@ const METHODS = {
   },
   deleteSelectedRow () {
     let rowsData = this.getSelectedRows()
-    if (rowsData.length) {
-      this.deleteRow(_.first(rowsData))
+    if (!_.isUndefined(rowsData[0])) {
+      this.deleteRow()
     } else {
       this.$message.error('请选择要删除的数据行')
     }

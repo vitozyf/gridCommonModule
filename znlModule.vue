@@ -82,6 +82,7 @@
             <label class="znl-searchHeader">
               <span class="icon">
                 <!-- <icon name="search"></icon> -->
+                <i class="iconfont icon-search_ic"></i>
               </span>
               <span class="searchText">搜索栏</span>
             </label>
@@ -659,13 +660,13 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 /* @import 'app/assets/styles/variables';
 @import 'app/assets/styles/mixins'; */
 
-/* .znl-grid {
+ .znl-grid {
   margin-bottom: 10px!important;
-  background-color:$white;
+  background-color:#fff;
   border-radius: 4px;
   border: 1px solid #DFE2E5;
   .znl-header {
@@ -673,9 +674,15 @@ export default {
     .pull-right{
       position: relative;
       top:10px;
-      z-index: 99
+      z-index: 99;
+      .znl-icons{
+         float: right;
+         text-decoration: none;
+         margin: 0 1px;
+      }
     }
     .znl-header-text {
+      float: left;
       font-size:26px;
       line-height:48px;
       margin-right: 15px;
@@ -685,17 +692,17 @@ export default {
     }
 
     .znl-icons {
-      padding: $padding-xs-vertical;
+      padding: 1px;
       width:24px;
       height:24px;
       line-height:24px;
       text-align:center;
-      color: lighten($black, 50%);
+      color: rgba(0,0,0,0.5);
       display: inline-block;
       border-radius: 2px;
 
       &:hover {
-        color: $white;
+        color: #fff;
         height: 24px!important;
         width:24px!important;
 
@@ -707,7 +714,7 @@ export default {
         background-color:#1BB934;
       }
       &.set:hover{
-        background-color: $brand-warning;
+        background-color: #F7BA2A;
       }
     }
     .znl-action {
@@ -730,14 +737,14 @@ export default {
       }
       .znl-tag {
         li {
-          padding: $padding-small-vertical $padding-small-horizontal;
+          padding: 5px 10px;
           display: inline-block;
           position: relative;
 
           a {
             font-weight: 600;
             display: block;
-            text-decoration: $link-hover-decoration;
+            text-decoration: none;
           }
           span {
             display: none;
@@ -764,29 +771,29 @@ export default {
       }
     }
   }
-  .el-button+.el-button {
-    margin-left: 0px !important;
-  }
-  .el-button {
-    margin-bottom: 5px;
+  // .el-button+.el-button {
+  //   margin-left: 0px !important;
+  // }
+  // .el-button {
+  //   margin-bottom: 5px;
 
-    &.el-button--default {
-      color: #666666;
-      background-color: #ffffff;
-      border: 1px solid #E6EAEE!important;
-      border-radius: 4px;
-      padding:2px 5px;
-      margin-right:10px;
+  //   &.el-button--default {
+  //     color: #666666;
+  //     background-color: #ffffff;
+  //     border: 1px solid #E6EAEE!important;
+  //     border-radius: 4px;
+  //     padding:2px 5px;
+  //     margin-right:10px;
 
-      &:hover {
-        background-color: #E6E6E6;
-        border-color: #E6E6E6;
-        color: lighten($black, 33.5%);
-        transition: background-color .8s;
-      }
-    }
-  }
-} */
+  //     &:hover {
+  //       background-color: #E6E6E6;
+  //       border-color: #E6E6E6;
+  //       color: rgba(0,0,0,0.335);
+  //       transition: background-color .8s;
+  //     }
+  //   }
+  // }
+}
 .znl-content {
   padding-top: 5px;
   padding-bottom: 1px;
@@ -811,7 +818,16 @@ export default {
 .znl-module .el-checkbox,.znl-module .el-checkbox__input{
   /* bottom:-4px; */
 }
-
+.infoSelection .el-button{
+    padding: 7px 16px;
+    border-color: #DFE2E5;
+    color: #999999;
+}
+.infoSelection .el-button:hover{
+  color: #999999;
+  border-color: #C4C4C4;
+  background-color: #E6E6E6;
+}
 .znl-header .iconfont{
   position: relative;
   font-size: 20px;

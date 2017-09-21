@@ -67,7 +67,7 @@
               <el-button type="default"
                          size="mini"
                          v-if="(type==='edit' || type==='action')&&!isMultiRowsCheck && showDeleteRowButton"
-                         @click="deleteSelectedRow()">
+                         @click="deleteRows()">
                 <i class="iconfont icon-delete_btn_ic"></i>
                 <span class="ver"> 删除选中行</span>
               </el-button>
@@ -534,7 +534,6 @@ export default {
       if (this.type === 'action') {
         this.$refs.actionFlexGrid.deleteRows()
       } else if (this.type === 'edit') {
-        // console.log('删除选择行', this.$refs.editFlexGrid)
         this.$refs.editFlexGrid.deleteRows()
       }
     },
@@ -576,6 +575,15 @@ export default {
         }, e => {
           this.p_loading = false
         })
+      }
+    },
+    clearSelection () {
+      if (this.type === 'base') {
+        return this.$refs.baseFlexGrid.clearSelection()
+      } else if (this.type === 'action') {
+        return this.$refs.actionFlexGrid.clearSelection()
+      } else {
+        return this.$refs.editFlexGrid.clearSelection()
       }
     },
     // onPageSave: Function,
@@ -750,6 +758,14 @@ export default {
 </script>
 
 <style  scoped>
+.znl-header .iconfont{
+  font-size: 14px;
+}
+.znl-header .znl-btn .el-button:hover{
+    color: #000;
+    border-color: #C4C4C4;
+    background-color: #E6E6E6;
+}
 /* @import 'app/assets/styles/_form'; */
 /* .el-button {
     margin-top: 5px;

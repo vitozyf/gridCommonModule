@@ -546,8 +546,8 @@ export default {
 }
 </script>
 
-<style>
- /*@import 'app/assets/styles/_variables.scss';
+<style lang="scss">
+ @import './assets/styles/_variables.scss';
 
 a {
   color: $gray-light;
@@ -666,6 +666,6 @@ a {
 
   }
 
-}*/
+}
 
 </style>

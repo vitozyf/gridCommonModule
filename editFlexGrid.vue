@@ -248,6 +248,9 @@ export default {
       } else {
         // this.editingSelection = null
       }
+    },
+    clearSelection () {
+      return this.$refs.actionFlexGrid.clearSelection()
     }
   }
 }
