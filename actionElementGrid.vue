@@ -98,6 +98,7 @@
 import _ from 'underscore'
 import BaseElementGrid from './baseElementGrid'
 import { mixin as actionMixin, options as actionOptions } from './scripts/action'
+// import Icon from 'vue-awesome/components/Icon'
 
 export default {
   name: 'ZnlActionFlexGrid',
@@ -105,6 +106,7 @@ export default {
   components: {
     // BaseFlexGrid
     BaseElementGrid
+    // Icon
   },
   data () {
     return {
@@ -281,9 +283,10 @@ export default {
         this.optionsSelected.rowIndex = rowIndex
         this.optionsSelected.colname = column.columnKey
         cell.appendChild(dblClickSelected)
-      } else if (!column.isReadOnly && column.dataType && column.dataType === 4) {
-        console.log(4)
-      } else if (!column.isReadOnly && !cell.querySelector('div input')) {
+      //  else if (!column.isReadOnly && column.dataType && column.dataType === 4) {
+      //   console.log(4)
+      // }
+      }else if (!column.isReadOnly && !cell.querySelector('div input')) {
         // 增加input
         let container = cell.querySelector('div div')
         let inp = document.createElement('input')

@@ -21,7 +21,7 @@ export default {
   },
   props: {
     title: String,
-    visible: {
+    visible: { // 是否弹出
       type: Boolean,
       default: false,
       propsync: true

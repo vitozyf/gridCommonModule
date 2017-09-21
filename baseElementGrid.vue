@@ -160,8 +160,10 @@
                   class="divider"></li>
               <li v-else-if="contextMenuDisabled(menu.disabled)">
                 <span>
-                  <i class="iconfont,icon-copy_ic"></i>
-                  {{menu.text}}
+                  <span>
+                     <!-- <icon :name="menu.iconName"></icon> -->
+                     {{menu.text}}
+                  </span>
                 </span>
               </li>
               <li v-else>
@@ -202,11 +204,11 @@
 <script>
 import _ from 'underscore'
 import copy from 'clipboard-copy'
-import icon from 'element-ui'
+// import Icon from 'vue-awesome/components/Icon'
 import znlButton from './znlButton'
 export default {
   components: {
-    icon,
+    // Icon,
     znlButton
   },
   data () {
@@ -404,6 +406,9 @@ export default {
         }
       })
       return this.$refs.baseElementGrid.clearSelection()
+    },
+    cancelAllChecked () {
+      return this.clearSelection()
     },
     search (event) { // 搜索
       if (event.keyCode === 13) {
@@ -744,6 +749,19 @@ export default {
     },
     selectionChange (selection) { // 选项发生变化时,当前选择项,类似账号权限设置已带勾选项再次勾选时需要返回该值
       this.currentSelection = selection
+    },
+    getSelectedRows () { // 选择数据
+      if (this.isMultiRowsCheck) {
+        if (_.filter(this.gridItemSource.items, item => item[CHECK_COLUMN_NAME]).slice().length <= 0) {
+          // console.log('选择', this.checkedRows, this.CurrentItem)
+          return this.checkedRows.length !== 0 ? this.checkedRows : (_.isNull(this.CurrentItem) ? [] : [this.CurrentItem])
+        } else {
+          return _.filter(this.gridItemSource.items, item => item[CHECK_COLUMN_NAME]).slice()
+        }
+      } else {
+        // console.log(this.checkedRows)
+        return this.checkedRows.length !== 0 ? this.checkedRows : (_.isNull(this.CurrentItem) ? [] : [this.CurrentItem])
+      }
     }
   },
   mounted () {
@@ -768,22 +786,31 @@ export default {
     }
     newTr.innerHTML = str
     thead.insertBefore(newTr, thead.firstChild)
+    // if (!this.isFieldsSearch) {
+    //   let elHeaderTr = this.$el.querySelectorAll('.el-table .el-table__header-wrapper thead tr.searchInp')[0]
+    //   if (elHeaderTr) {
+    //     elHeaderTr.style.display = 'none'
+    //   }
+    // }
+
     let _this = this
     let searchInputsIcon = newTr.querySelectorAll('.searchInp')
     _.each(searchInputsIcon, item => {
       item.onkeyup = function () {
         let icon = item.parentElement.querySelector('.el-input__icon')
-        if (item.value) {
-          icon.style.display = 'block'
-          icon.onclick = function () {
-            item.value = ''
-            let e = {}
-            e.keyCode = 13
-            _.delay(_this.search, 100, e)
+        if(icon){
+          if (item.value) {
+            icon.style.display = 'block'
+            icon.onclick = function () {
+              item.value = ''
+              let e = {}
+              e.keyCode = 13
+              _.delay(_this.search, 100, e)
+              icon.style.display = 'none'
+            }
+          } else {
             icon.style.display = 'none'
           }
-        } else {
-          icon.style.display = 'none'
         }
       }
     })
@@ -859,6 +886,41 @@ export default {
     line-height: 30px;
     position: relative;
   }
+  /* 操作按钮 */
+  .el-table .el-table__row .cell .elementGridBtn,.IsAdoptStkTxtBtn{
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .elementGridBtn .el-button,.IsAdoptStkTxtBtn .el-button{
+      transition: none;
+      border: none!important;
+      padding: 3px;
+      border-radius: 3px;
+      color: #EE7700;
+      text-decoration: underline;
+      background-color: transparent;
+  }
+  .elementGridBtn .el-button.tgactive{
+    color: #ED9E00;
+  }
+  .elementGridBtn .el-button.active{
+    background-color: transparent;
+  }
+  .elementGridBtn .el-button span{
+    background-color: transparent!important;
+  }
+  .elementGridBtn .IsextensionResultGridBtn{
+    color:#6B6B6A;
+    text-decoration: none;
+  }
+  .elementGridBtn .el-button:hover{
+      background-color: #EE7700;
+      color: #fff;
+      text-decoration: none;
+  }
+
   .el-table .el-table__row .cell>div{
     padding: 0 5px;
   }
@@ -884,7 +946,7 @@ export default {
   .el-table tbody td {
     height: 30px;
   }
- /* 日期控件 */
+  /* 日期控件 */
   .base-flex-grid .el-date-editor--daterange.el-input{
     width:100%;
   }
@@ -908,138 +970,143 @@ export default {
     color: #fff;
     font-weight: 500;
   }
-  /* // 右键菜单 */
-.wj-right-menu {
-  padding: 0;
-  margin: 0;
-  background-color: #fff;
-  border: 1px solid #d1dbe5;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .12);
-  padding: 6px 0;
-  top: 0;
-  left: 0;
-  min-width: 100px;
-  position: fixed;
-  z-index: 9999;
+    /* // 右键菜单 */
+  .wj-right-menu {
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    border: 1px solid #d1dbe5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .12);
+    padding: 6px 0;
+    top: 0;
+    left: 0;
+    min-width: 100px;
+    position: fixed;
+    z-index: 9999;
+    }
+  .wj-right-menu:focus {
+    outline: none;
   }
-.wj-right-menu:focus {
-  outline: none;
-}
-.wj-right-menu ul{
-  margin: 0;
-  padding: 0;
-}
-.wj-right-menu li{
-  padding: 0;
-  margin: 0;
-  min-width: 120px;
-  list-style: none;
-}
-.wj-right-menu li span {
-  color: lighten(#000, 60%);
-}
-.wj-right-menu li span .fa-icon {
-  color: lighten(#000, 80%);
-}
-.wj-right-menu li.divider {
-  height: 1px;
-  margin: 9px 0;
-  overflow: hidden;
-  background-color: #eee;
-}
-.wj-right-menu li a,.wj-right-menu li span {
-  /* padding: 0 10px 0 30px; */
-  font-size: 12px;
-  color: #222;
-  display: block;
-  height: 26px;
-  line-height: 26px;
-  text-decoration: none;
-  position: relative;
-  cursor: pointer;
-}
- .wj-right-menu li a:hover,.wj-right-menu li span:hover {
-  background-color: #FF7700
-}
-.wj-right-menu li a .fa-icon,.wj-right-menu li span .fa-icon {
-  height: 14px;
-  color: #777;
-  position: absolute;
-  left: 10px;
-  top: 7px;
-}
+  .wj-right-menu ul{
+    margin: 0;
+    padding: 0;
+  }
+  .wj-right-menu li{
+    padding: 0;
+    margin: 0;
+    min-width: 120px;
+    list-style: none;
+  }
+  .wj-right-menu li span {
+    color: lighten(#000, 60%);
+  }
+  .wj-right-menu li span .fa-icon {
+    color: lighten(#000, 80%);
+  }
+  .wj-right-menu li.divider {
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+    background-color: #eee;
+  }
+  .wj-right-menu li a,.wj-right-menu li span {
+    /* padding: 0 10px 0 30px; */
+    font-size: 12px;
+    color: #222;
+    display: block;
+    height: 26px;
+    line-height: 26px;
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+  }
+  .wj-right-menu li a:hover,.wj-right-menu li span:hover {
+    background-color: #FF7700
+  }
+  .wj-right-menu li a .fa-icon,.wj-right-menu li span .fa-icon {
+    height: 14px;
+    color: #777;
+    position: absolute;
+    left: 10px;
+    top: 7px;
+  }
 
-.footer {
-  display: flex;
-  align-items: center;
-  padding: 5px;
-}
-.footer .infoSelection{
-  float: left;
-  font-size: 12px;
-}
-/* 分页器 */
-.footer .el-pagination .el-pager li.active{
-  background-color: #FF7700;
-  border: none;
-}
-/* 双击下拉选择框 */
-#dblClickSelected{
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height:30px;
-  border-radius: 0;
-  box-sizing: border-box;
-  z-index: 10;
-}
-#dblClickSelected .el-select{
-  width: 100%;
-  height: 30px;
-}
-/* 编辑单元格input的resize-triggers */
-#dblClickSelected .resize-triggers, .resize-triggers > div, .contract-trigger:before{
-  top:-1px;
-}
-#dblClickSelected .el-input{
-     width: 100%;
-     padding: 0px;
-     height: 30px;
-     line-height: 30px;
-     font-size: 12px;
-     border: 1px solid #ED9E00;
-     border-radius: 0;
-     position: relative;
-     top: -1px;
+  .footer {
+    display: flex;
+    align-items: center;
+    padding: 5px;
   }
-#dblClickSelected .el-input  .el-input__inner{
-  width: 100%;
-  font-size: 12px;
-  border: none;
-  padding: 0 5px;
-  border-radius: 0;
-  outline: none;
-  height: 30px;
-}
-#dblClickSelected .el-input .el-input__icon{
-  width: 10px;
-  height: 10px;
-  line-height: 30px;
-  position: absolute;
-  top: 25px;
-  right: 9px;
-  transition: none;
-}
-#dblClickSelected .el-input .el-input__icon.is-reverse{
-  top:5px;
-}
-/* 编辑input */
-.dblClickInputStyleAll{
-  position: absolute;
-  z-index: 9999;
-  top:0;
-  left:0;
-}
+  .footer .infoSelection{
+    float: left;
+    font-size: 12px;
+  }
+  /* 分页器 */
+  .footer .el-pagination .el-pager li.active{
+    background-color: #FF7700;
+    border: none;
+  }
+  /* 双击下拉选择框 */
+  #dblClickSelected{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height:30px;
+    border-radius: 0;
+    box-sizing: border-box;
+    z-index: 10;
+  }
+  #dblClickSelected .el-select{
+    width: 100%;
+    height: 30px;
+  }
+  /* 编辑单元格input的resize-triggers */
+  #dblClickSelected .resize-triggers, .resize-triggers > div, .contract-trigger:before{
+    top:-1px;
+  }
+  #dblClickSelected .el-input{
+      width: 100%;
+      padding: 0px;
+      height: 30px;
+      line-height: 30px;
+      font-size: 12px;
+      border: 1px solid #ED9E00;
+      border-radius: 0;
+      position: relative;
+      top: -1px;
+    }
+  #dblClickSelected .el-input  .el-input__inner{
+    width: 100%;
+    font-size: 12px;
+    border: none;
+    padding: 0 5px;
+    border-radius: 0;
+    outline: none;
+    height: 30px;
+  }
+  #dblClickSelected .el-input .el-input__icon{
+    width: 10px;
+    height: 10px;
+    line-height: 30px;
+    position: absolute;
+    top: 25px;
+    right: 9px;
+    transition: none;
+  }
+  #dblClickSelected .el-input .el-input__icon.is-reverse{
+    top:5px;
+  }
+  /* 编辑input */
+  .dblClickInputStyleAll{
+    position: absolute;
+    z-index: 9999;
+    top:0;
+    left:0;
+  }
+  /* action只读列 */
+  .isReadOnlyColumn{
+    background-color: #F0F0F0;
+  }
+
 </style>
 
